@@ -1,19 +1,13 @@
 const express = require('express')
-const { faker } = require('@faker-js/faker')
+// const { faker } = require('@faker-js/faker')
+const UsersService = require('../services/users.service')
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
-  const users = []
-  const {size} = req.query
-  const limit = size || 10
-  for (let i = 0; i < limit; i++) {
-    users.push({
-      name: faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      image: faker.image.imageUrl()
-    })
-  }
+const service = new UsersService()
+
+router.get('/',async  (req, res) => {
+  const users = await service.find()
   res.json(users)
 })
 
